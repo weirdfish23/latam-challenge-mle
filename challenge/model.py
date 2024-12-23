@@ -53,6 +53,10 @@ class DelayModel:
             ],
             axis=1,
         )
+        missing_features = list(set(self.top_10_features) - set(features.columns))
+        ## filling missing features with 0
+        for mf in missing_features:
+            features[mf] = 0
 
         preprocessed_data = features[self.top_10_features]
 
