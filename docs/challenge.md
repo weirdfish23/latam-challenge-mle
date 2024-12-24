@@ -8,7 +8,12 @@
 - FastAPI application 
     - Load model at start up time
     - Schema definition for input body with `pydantic` (`DelayPredictionInputBody` and `Flight` classes)
-    - Data preprocessing and missing values filling per request
+        - It validates:
+            - Operator (present in training data)
+            - Month (Between 1 and 12)
+            - Tipo Vuelo (`N` or `I`)
+
+    - Data preprocessing and fill missing values per request
 
 # PART III - Deploy API
 
@@ -28,3 +33,29 @@ gcloud run services replace service.yaml --region us-east1
 ```
 gcloud run services set-iam-policy demo-fastapi-service gcr-service-policy.yaml --region us-east1
 ```
+
+# PART IV - CI/CD
+
+- Continuous deployment (runs on push or pull request to MAIN branch)
+    - Build and push docker image to GC Artifact Registry 
+    - Deploy latest docker image to GC Run
+- Continuous integration (runs on push or pull request to any branch)
+    - Test model (`make model-test`)
+    - Test api (`make api-test`)
+    
+Add permissions to service account `latam-challenge` for CD:
+```.sh
+gcloud projects add-iam-policy-binding latam-challenge-mle-445621 \
+    --member="serviceAccount:latam-challenge@latam-challenge-mle-445621.iam.gserviceaccount.com" \
+    --role="roles/artifactregistry.writer"
+
+gcloud projects add-iam-policy-binding latam-challenge-mle-445621 \
+  --member="serviceAccount:latam-challenge@latam-challenge-mle-445621.iam.gserviceaccount.com" \
+  --role="roles/run.admin"
+
+gcloud projects add-iam-policy-binding latam-challenge-mle-445621 \
+  --member="serviceAccount:latam-challenge@latam-challenge-mle-445621.iam.gserviceaccount.com" \
+  --role="roles/iam.serviceAccountUser"
+  ```
+
+Author: Joel Jossue Cabrera Rios
