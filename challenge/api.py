@@ -3,7 +3,6 @@ from fastapi import HTTPException
 import pandas as pd
 from challenge.model import DelayModel
 from typing import List
-from typing_extensions import Annotated
 from pydantic import BaseModel, ValidationError, validator
 
 

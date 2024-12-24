@@ -1,0 +1,5 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'Dockerfile', '-t', 'us-central1-docker.pkg.dev/latam-challenge-mle-445621/demo-fastapi/demo-fastapi:latest', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/latam-challenge-mle-445621/demo-fastapi/demo-fastapi:latest']
