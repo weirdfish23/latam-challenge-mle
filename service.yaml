@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: demo-fastapi-service
+spec:
+  template:
+    spec:
+      containers:
+        - image: us-central1-docker.pkg.dev/latam-challenge-mle-445621/demo-fastapi/demo-fastapi:latest
+          env:
+          ports:
+            - containerPort: 4000
