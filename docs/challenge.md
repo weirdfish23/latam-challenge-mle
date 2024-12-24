@@ -36,9 +36,12 @@ gcloud run services set-iam-policy demo-fastapi-service gcr-service-policy.yaml 
 
 # PART IV - CI/CD
 
-- Continuous deployment. 
+- Continuous deployment (runs on push or pull request to MAIN branch)
     - Build and push docker image to GC Artifact Registry 
     - Deploy latest docker image to GC Run
+- Continuous integration (runs on push or pull request to any branch)
+    - Test model (`make model-test`)
+    - Test api (`make api-test`)
     
 Add permissions to service account `latam-challenge` for CD:
 ```.sh
@@ -54,3 +57,5 @@ gcloud projects add-iam-policy-binding latam-challenge-mle-445621 \
   --member="serviceAccount:latam-challenge@latam-challenge-mle-445621.iam.gserviceaccount.com" \
   --role="roles/iam.serviceAccountUser"
   ```
+
+Author: Joel Jossue Cabrera Rios
